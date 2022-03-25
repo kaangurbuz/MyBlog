@@ -11,18 +11,17 @@ namespace MyNotes.EntityLayer
     [Table("tblNotes")]
     public class Note:BaseEntity
     {
-        [StringLength(60),Required]
+        [MaxLength,Required]
         public string Title { get; set; }
         [MaxLength, Required]
         public string Text { get; set; }
         public bool IsDraft { get; set; }
         public int LikeCount { get; set; }
-        public int CategoryId { get; set; }
         public virtual MyNotesUser Owner { get; set; }
         public virtual Category Category { get; set; }
+        public virtual List<Comment> Comments { get; set; } = new List<Comment>();
 
-        public virtual ICollection<Comment> Comments { get; set; }
-        public virtual ICollection<Liked> Likeds { get; set; }
+        public virtual List<Liked> Likeds { get; set; } = new List<Liked>();
         //eager loading: olusturacagim nesnede alt baglamlar var ise hepsini getirir
         // lazy loading . olusturulan nesne getirilir ilgili baglamlar yuklenmez
     }
