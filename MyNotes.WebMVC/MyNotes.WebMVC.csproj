@@ -127,6 +127,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -138,6 +139,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\styles.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -155,6 +157,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\scripts.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -169,6 +172,7 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Category\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -191,6 +195,10 @@
     <ProjectReference Include="..\MyNotes.BusinessLayer\MyNotes.BusinessLayer.csproj">
       <Project>{4b5ca4fd-cef8-4eb7-b99f-7d2a7995277a}</Project>
       <Name>MyNotes.BusinessLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MyNotes.DataAccessLayer\MyNotes.DataAccessLayer.csproj">
+      <Project>{36FB5E4F-E452-4AC9-9E36-F60D5F2FCB1B}</Project>
+      <Name>MyNotes.DataAccessLayer</Name>
     </ProjectReference>
     <ProjectReference Include="..\MyNotes.EntityLayer\MyNotes.EntityLayer.csproj">
       <Project>{6da15866-92ce-4f91-946f-696ffe825d04}</Project>

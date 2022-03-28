@@ -12,6 +12,8 @@ namespace MyNotes.WebMVC.Controllers
         public ActionResult Index()
         {
             Test test = new Test();
+
+
             return View();
         }
 
