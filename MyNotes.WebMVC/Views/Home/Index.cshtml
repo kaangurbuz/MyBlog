@@ -1,0 +1,82 @@
+﻿@using System.Diagnostics.Eventing.Reader
+@using MyNotes.BusinessLayer
+@using MyNotes.EntityLayer
+@{
+    NoteManager nm = new NoteManager();
+    var lst = nm.List();
+}
+
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+
+<section class="py-5">
+    <div class="container-fluid px-4 px-lg-5 mt-3">
+        <div class="row gx-4 gx-lg-5 row-cols-1 row-cols-md-3 row-cols-xl-3 justify-content-center">
+            @{
+                int i = 0;
+            }
+            @foreach (var note in lst)
+            {
+                <div class="col mb-5">
+                    <div class="card h-100">
+                        <!-- Product image-->
+                        <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+                        <!-- Product details-->
+                        <div class="card-body p-4 px-1">
+                            <div class="text-center">
+                                <!-- Product name-->
+                                <h5 class="fw-bolder">@note.Title</h5>
+                                <!-- Product reviews-->
+                                <div class="d-flex justify-content-between small">
+                                    <div>
+                                        <i class="far fa-user"></i> @note.Owner.UserName
+                                    </div>
+                                    <div>
+                                        <i class="far fa-clock"></i> @note.ModifiedOn.ToString()
+                                    </div>
+                                </div>
+                                <p class="card-text">
+                                    @if (string.IsNullOrEmpty(note.Text) == false && note.Text.Length > 70)
+                                    {
+                                        @note.Text.Substring(0, 70);
+                                        <span class="text-danger">...</span>
+
+
+
+                                    }
+                                    else if (string.IsNullOrEmpty(note.Text))
+                                    {
+                                        <p class="text-danger"> @("..."); </p>
+
+
+                                    }
+                                    else
+                                    {
+                                        @note.Text
+                                    }
+                                </p>
+                            </div>
+                        </div>
+                        <hr/>
+                        <!-- Product actions-->
+                        <div class="bg-transparent d-flex justify-content-between">
+                            <p>
+                                <button class="btn btn-outline-light text-dark btn-lg">
+                                    <i class="bi bi-heart text-danger"></i> @note.LikeCount
+                                </button>
+                            <p>
+                                <button class="btn btn-outline-light text-dark btn-lg" data-bs-toggle="modal" data-bs-target="#modal_comment" data-note-id="@note.Id">
+                                    <i class="bi bi-chat-left-dots-fill"></i> Yorumlar
+                                </button>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</section>
