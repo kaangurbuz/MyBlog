@@ -18,7 +18,8 @@ namespace MyNotes.DataAccessLayer
 
         public MyNoteContext():base("SqlConDb")
         {
-            
+            Database.SetInitializer(new MyInitializer());
         }
+
     }
 }
