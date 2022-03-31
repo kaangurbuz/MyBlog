@@ -11,6 +11,35 @@
     ViewBag.Title = "Home Page";
 }
 
+<style>
+    #heart div {
+        color: white;
+        cursor: pointer;
+        margin-top: 0.75rem;
+        margin-bottom: 2rem;
+        font-size: 1.2rem;
+        text-shadow: 2px 0 0 red, -2px 0 0 red, 0 2px 0 red, 0 -2px 0 red, 1px 1px red, -1px -1px 0 red, 1px -1px 0 red, -1px 1px 0 red;
+    }
+
+    #heart div:hover{
+        color:red;
+        
+    }
+
+    #comment div {
+        color: white;
+        cursor: pointer;
+        margin-top: 0.75rem;
+        margin-bottom: 2rem;
+        font-size: 1.2rem;
+        text-shadow: 2px 0 0 black, -2px 0 0 black, 0 2px 0 black, 0 -2px 0 black, 1px 1px black, -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black;
+    }
+
+    #comment div:hover{
+        color:gray;
+        
+    }
+</style>
 
 <section class="py-5">
     <div class="container-fluid px-4 px-lg-5 mt-3">
@@ -49,7 +78,8 @@
                                     }
                                     else if (string.IsNullOrEmpty(note.Text))
                                     {
-                                        <p class="text-danger"> @("..."); </p>
+                                        <p class="text-danger"> @("..."); 
+                                            </p>
 
 
                                     }
@@ -57,20 +87,28 @@
                                     {
                                         @note.Text
                                     }
-                                </p>
+                                
                             </div>
                         </div>
                         <hr/>
                         <!-- Product actions-->
                         <div class="bg-transparent d-flex justify-content-between">
                             <p>
-                                <button class="btn btn-outline-light text-dark btn-lg">
+                                @*<button class="btn btn-outline-light text-dark btn-lg">
                                     <i class="bi bi-heart text-danger"></i> @note.LikeCount
-                                </button>
+                                </button>*@
+                                
+                                <div class="icons" id="heart">
+                                    <div href="#" class="fas fa-heart" id="heart-btn"></div> @note.LikeCount
+                                </div>
+                            </p>
                             <p>
-                                <button class="btn btn-outline-light text-dark btn-lg" data-bs-toggle="modal" data-bs-target="#modal_comment" data-note-id="@note.Id">
+                                @*<button class="btn btn-outline-light text-dark btn-lg" data-bs-toggle="modal" data-bs-target="#modal_comment" data-note-id="@note.Id">
                                     <i class="bi bi-chat-left-dots-fill"></i> Yorumlar
-                                </button>
+                                </button>*@
+                                <div class="icons" id="comment" data-bs-toggle="modal" data-bs-target="#modal_comment" data-note-id="@note.Id">
+                                    <div class="fa-solid fa-comment-dots" id="comment-btn"></div> Yorumlar
+                                </div>
                             </p>
                         </div>
                     </div>
@@ -80,3 +118,23 @@
         </div>
     </div>
 </section>
+
+@Bootstrap.ModalPopup("modal_comment","Yorumlar")
+<script src="../../Scripts/jquery-3.6.0.min.js"> </script>
+<script>
+    let noteId = -1;
+    let modalCommentBodyId = "#modal_comment_body";
+
+    $(function() {
+        $('#modal_comment').on('show.bs.modal',
+            function(e) {
+                var btn = $(e.relatedTarget);
+                //console.log(e.relatedTarget);
+                noteId = btn.data("note-id");
+                //console.log(noteId);
+                $(modalCommentBodyId).load("/Comment/ShowNoteComments/" + noteId);
+                //console.log(modalCommentBodyId);
+            });
+    });
+
+</script>
