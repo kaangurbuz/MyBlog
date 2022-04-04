@@ -21,10 +21,9 @@
         text-shadow: 2px 0 0 red, -2px 0 0 red, 0 2px 0 red, 0 -2px 0 red, 1px 1px red, -1px -1px 0 red, 1px -1px 0 red, -1px 1px 0 red;
     }
 
-    #heart div:hover{
-        color:red;
-        
-    }
+        #heart div:hover {
+            color: red;
+        }
 
     #comment div {
         color: white;
@@ -35,10 +34,9 @@
         text-shadow: 2px 0 0 black, -2px 0 0 black, 0 2px 0 black, 0 -2px 0 black, 1px 1px black, -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black;
     }
 
-    #comment div:hover{
-        color:gray;
-        
-    }
+        #comment div:hover {
+            color: gray;
+        }
 </style>
 
 <section class="py-5">
@@ -78,63 +76,132 @@
                                     }
                                     else if (string.IsNullOrEmpty(note.Text))
                                     {
-                                        <p class="text-danger"> @("..."); 
-                                            </p>
+                                    <p class="text-danger">
+                                        @("...");
+                                    </p>
 
 
-                                    }
-                                    else
-                                    {
-                                        @note.Text
-                                    }
-                                
+                                }
+                                else
+                                {
+                                    @note.Text
+                                }
+
+                                </div>
+                            </div>
+                            <hr />
+                            <!-- Product actions-->
+                            <div class="bg-transparent d-flex justify-content-between">
+                                <p>
+                                    @*<button class="btn btn-outline-light text-dark btn-lg">
+                                            <i class="bi bi-heart text-danger"></i> @note.LikeCount
+                                        </button>*@
+
+                                    <div class="icons" id="heart">
+                                        <div href="#" class="fas fa-heart" id="heart-btn"></div>&nbsp;<span id="likeCount">@note.LikeCount</span>
+                                    </div>
+                                </p>
+                                <p>
+                                    @*<button class="btn btn-outline-light text-dark btn-lg" data-bs-toggle="modal" data-bs-target="#modal_comment" data-note-id="@note.Id">
+                                            <i class="bi bi-chat-left-dots-fill"></i> Yorumlar
+                                        </button>*@
+                                    <div class="icons" id="comment" data-bs-toggle="modal" data-bs-target="#modal_comment" data-note-id="@note.Id">
+                                        <div class="fa-solid fa-comment-dots" id="comment-btn"></div> Yorumlar
+                                    </div>
+                                </p>
                             </div>
                         </div>
-                        <hr/>
-                        <!-- Product actions-->
-                        <div class="bg-transparent d-flex justify-content-between">
-                            <p>
-                                @*<button class="btn btn-outline-light text-dark btn-lg">
-                                    <i class="bi bi-heart text-danger"></i> @note.LikeCount
-                                </button>*@
-                                
-                                <div class="icons" id="heart">
-                                    <div href="#" class="fas fa-heart" id="heart-btn"></div> @note.LikeCount
-                                </div>
-                            </p>
-                            <p>
-                                @*<button class="btn btn-outline-light text-dark btn-lg" data-bs-toggle="modal" data-bs-target="#modal_comment" data-note-id="@note.Id">
-                                    <i class="bi bi-chat-left-dots-fill"></i> Yorumlar
-                                </button>*@
-                                <div class="icons" id="comment" data-bs-toggle="modal" data-bs-target="#modal_comment" data-note-id="@note.Id">
-                                    <div class="fa-solid fa-comment-dots" id="comment-btn"></div> Yorumlar
-                                </div>
-                            </p>
-                        </div>
                     </div>
-                </div>
-            }
+                }
 
         </div>
     </div>
 </section>
 
-@Bootstrap.ModalPopup("modal_comment","Yorumlar")
-<script src="../../Scripts/jquery-3.6.0.min.js"> </script>
+@Bootstrap.ModalPopup("modal_comment", "Yorumlar")
+<script src="../../Scripts/jquery-3.6.0.min.js"></script>
 <script>
     let noteId = -1;
     let modalCommentBodyId = "#modal_comment_body";
 
-    $(function() {
+    $(function () {
         $('#modal_comment').on('show.bs.modal',
-            function(e) {
+            function (e) {
                 var btn = $(e.relatedTarget);
-                //console.log(e.relatedTarget);
                 noteId = btn.data("note-id");
-                //console.log(noteId);
                 $(modalCommentBodyId).load("/Comment/ShowNoteComments/" + noteId);
-                //console.log(modalCommentBodyId);
             });
     });
+    $(document).ready(function () {
+        $('#heart div').click(function (e) {
+            var $this = $(this);
+            e.preventDefault();
+
+           var num = parseInt($("#likeCount").text()); // sayiyi aldigim yer
+            console.log(num);
+
+            if (!$this.hasClass('isItLiked')) {
+                $this.addClass('isItLiked');
+                $(this, "#heart-btn").css("color", "red");
+               
+                $("#likeCount").text(num + 1); // like islemi
+            }
+            else {
+
+                $this.removeClass('isItLiked');
+
+                $(this, "heart-btn").css("color", '');
+                $("#likeCount").text(num - 1); // like i geri cekme islemi
+            }
+        });
+
+    });
+
+
+    function doComment(btn, e, commentId, spanId) {
+        var button = $(btn);
+        var mode = button.data('edit-mode');
+        if (e === 'edit_clicked') {
+            if (!mode) {
+                button.data('edit-mode', true);
+                button.removeClass('btn-warning');
+                button.addClass('btn-success')
+                var btnSpan = button.find('span');
+                btnSpan.removeClass('bi-pencil');
+                btnSpan.addClass('bi-check');
+                $(spanId).addClass('editable');
+                $(spanId).attr('contenteditable', true);
+                $(spanId).focus();
+            }
+            else {
+                button.data('edit-mode', false);
+                button.removeClass('btn-success');
+                button.addClass('btn-warning')
+                var btnSpan = button.find('span');
+                btnSpan.removeClass('bi-check');
+                btnSpan.addClass('bi-pencil');
+                $(spanId).addClass('editable');
+                $(spanId).attr('contenteditable', false);
+
+                var txt = $(spanId).text();
+
+                $.ajax({
+                    method: "POST",
+                    url: "/Comment/Edit/" + commentId,
+                    data: { text: txt }
+                }).done(function (data) {
+                    if (data.result) {
+                        //yorumlari tekrar yukleme
+                        $(modalCommentBodyId).load("/Comment/ShowNoteComments/" + noteId);
+                    } else {
+                        alert("Yorumunuz Guncellenemedi!");
+                    }
+                }).fail(function () {
+                    alert("Sunucu ile baglanti kurulamadi.");
+                });
+
+            }
+        }
+    }
 
 </script>

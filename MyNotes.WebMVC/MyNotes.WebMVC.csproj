@@ -133,6 +133,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Init\WebCommon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -152,11 +153,13 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\Login-RegisterStyle.css" />
     <Content Include="Content\styles.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="App_Code\Bootstrap.cshtml" />
+    <Content Include="Images\557289_gHeXtk1m.png" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -225,6 +228,7 @@
     <Content Include="Views\Comment\Index.cshtml" />
     <Content Include="Views\Shared\_PartialComments.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\Home\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -237,6 +241,10 @@
     <ProjectReference Include="..\MyNotes.BusinessLayer\MyNotes.BusinessLayer.csproj">
       <Project>{4b5ca4fd-cef8-4eb7-b99f-7d2a7995277a}</Project>
       <Name>MyNotes.BusinessLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MyNotes.CommonLayer\MyNotes.CommonLayer.csproj">
+      <Project>{AB7448A3-F6CF-48AF-B789-A5B511E57924}</Project>
+      <Name>MyNotes.CommonLayer</Name>
     </ProjectReference>
     <ProjectReference Include="..\MyNotes.DataAccessLayer\MyNotes.DataAccessLayer.csproj">
       <Project>{36FB5E4F-E452-4AC9-9E36-F60D5F2FCB1B}</Project>

@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using MyNotes.CommonLayer;
+using MyNotes.WebMVC.Init;
 
 namespace MyNotes.WebMVC
 {
@@ -16,6 +18,8 @@ namespace MyNotes.WebMVC
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            App.Common = new WebCommon();
         }
     }
 }

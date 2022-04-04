@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyNotes.WebMVC", "MyNotes.W
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyNotes.CoreLayer", "MyNotes.CoreLayer\MyNotes.CoreLayer.csproj", "{98B41CD3-DB51-4DBF-9A47-19C943EBDB14}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyNotes.CommonLayer", "MyNotes.CommonLayer\MyNotes.CommonLayer.csproj", "{AB7448A3-F6CF-48AF-B789-A5B511E57924}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{98B41CD3-DB51-4DBF-9A47-19C943EBDB14}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{98B41CD3-DB51-4DBF-9A47-19C943EBDB14}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{98B41CD3-DB51-4DBF-9A47-19C943EBDB14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB7448A3-F6CF-48AF-B789-A5B511E57924}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB7448A3-F6CF-48AF-B789-A5B511E57924}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB7448A3-F6CF-48AF-B789-A5B511E57924}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB7448A3-F6CF-48AF-B789-A5B511E57924}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

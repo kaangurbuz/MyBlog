@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using MyNotes.EntityLayer
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -17,24 +18,26 @@
     
 </head>
 <body>
-    <!-- Navigation-->
-   @Html.Partial("_PartialNav")
-    <!-- Header-->
-   @Html.Partial("_PartialHeader")
+
+
+<!-- Navigation-->
+@Html.Partial("_PartialNav")
+<!-- Header-->
+@Html.Partial("_PartialHeader")
 <!-- Section-->
-    <div class="container-fluid body-content">
-        <div class="row">
-            <div id="category2" class="col-md-3">
-                @Html.Partial("_PartialCategories")
-            </div>
-            <div id="category3" class="col-md-9">
-                @RenderBody()
-            </div>
+<div class="container-fluid body-content">
+    <div class="row">
+        <div id="category2" class="col-md-3">
+            @Html.Partial("_PartialCategories")
+        </div>
+        <div id="category3" class="col-md-9">
+            @RenderBody()
         </div>
     </div>
+</div>
 
-    <!-- Footer-->
-   @Html.Partial("_PartialFooter")
+<!-- Footer-->
+@Html.Partial("_PartialFooter")
 <!-- Bootstrap core JS-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Core theme JS-->

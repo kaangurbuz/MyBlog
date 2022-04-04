@@ -10,6 +10,7 @@ namespace MyNotes.CoreLayer
     public interface IRepository<T>
     {
         List<T> List();
+
         List<T> List(Expression <Func<T, bool>> predicate);
         //select * from table where id=1
         //db.context.Set<T>().Where(x=> x.Id == 1).FirstOrDefault();

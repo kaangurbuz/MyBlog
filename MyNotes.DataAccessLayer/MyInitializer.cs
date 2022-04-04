@@ -86,34 +86,34 @@ namespace MyNotes.DataAccessLayer
                     for (int j = 0; j < FakeData.NumberData.GetNumber(5, 9); j++)
                     {
                         MyNotesUser owner = userList[FakeData.NumberData.GetNumber(0, userList.Count - 1)];
-                        Note note = new Note();
-
-                        note.Title = FakeData.PlaceData.GetCity();
-                        note.Text = FakeData.TextData.GetSentences(FakeData.NumberData.GetNumber(1, 3));
-                        note.IsDraft = false;
-                        note.LikeCount = FakeData.NumberData.GetNumber(1, 9);
-                        note.Owner = owner;
-                        note.CreatedOn = FakeData.DateTimeData.GetDatetime(DateTime.Now.AddYears(-2),
-                            DateTime.Now.AddYears(-1));
-                        note.ModifiedOn =
-                            FakeData.DateTimeData.GetDatetime(DateTime.Now.AddYears(-1), DateTime.Now);
-                        note.ModifiedUserName = owner.UserName;
+                        Note note = new Note
+                        {
+                            Title = FakeData.PlaceData.GetCity(),
+                            Text = FakeData.TextData.GetSentences(FakeData.NumberData.GetNumber(1, 3)),
+                            IsDraft = false,
+                            LikeCount = FakeData.NumberData.GetNumber(1, 9),
+                            Owner = owner,
+                            CreatedOn = FakeData.DateTimeData.GetDatetime(DateTime.Now.AddYears(-2),
+                                DateTime.Now.AddYears(-1)),
+                            ModifiedOn = FakeData.DateTimeData.GetDatetime(DateTime.Now.AddYears(-1), DateTime.Now),
+                            ModifiedUserName = owner.UserName
+                        };
 
                         //context.Notes.Add(note);
                         cat.Notes.Add(note);
                         //Adding Comment
                         for (int k = 0; k < FakeData.NumberData.GetNumber(3, 5); k++)
                         {
-                            MyNotesUser comment_owner = userList[FakeData.NumberData.GetNumber(0, userList.Count - 1)];
+                            MyNotesUser commentOwner = userList[FakeData.NumberData.GetNumber(0, userList.Count - 1)];
                             Comment comment = new Comment()
                             {
                                 Text = FakeData.TextData.GetSentence(),
-                                Owner = comment_owner,
+                                Owner = commentOwner,
                                 //Note = note,
                                 CreatedOn = FakeData.DateTimeData.GetDatetime(DateTime.Now.AddYears(-2),
                                     DateTime.Now.AddYears(-1)),
                                 ModifiedOn = FakeData.DateTimeData.GetDatetime(DateTime.Now.AddYears(-1), DateTime.Now),
-                                ModifiedUserName = comment_owner.UserName
+                                ModifiedUserName = commentOwner.UserName
                             };
                             note.Comments.Add(comment);
                         }
