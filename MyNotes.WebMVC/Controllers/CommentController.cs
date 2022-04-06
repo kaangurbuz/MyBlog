@@ -48,7 +48,6 @@ namespace MyNotes.WebMVC.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Create(Comment comment,int? noteId)
         {
             ModelState.Remove("CreatedOn");

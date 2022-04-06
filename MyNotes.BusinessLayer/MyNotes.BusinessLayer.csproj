@@ -70,6 +70,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MyNotes.CommonLayer\MyNotes.CommonLayer.csproj">
+      <Project>{AB7448A3-F6CF-48AF-B789-A5B511E57924}</Project>
+      <Name>MyNotes.CommonLayer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MyNotes.CoreLayer\MyNotes.CoreLayer.csproj">
       <Project>{98B41CD3-DB51-4DBF-9A47-19C943EBDB14}</Project>
       <Name>MyNotes.CoreLayer</Name>

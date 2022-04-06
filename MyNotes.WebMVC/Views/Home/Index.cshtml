@@ -98,7 +98,7 @@
                                         </button>*@
 
                                     <div class="icons" id="heart">
-                                        <div href="#" class="fas fa-heart" id="heart-btn"></div>&nbsp;<span id="likeCount">@note.LikeCount</span>
+                                        <div href="#" class="fas fa-heart" id="heart-btn"></div>&nbsp;<span id="count" class="count">@note.LikeCount</span>
                                     </div>
                                 </p>
                                 <p>
@@ -132,31 +132,52 @@
                 $(modalCommentBodyId).load("/Comment/ShowNoteComments/" + noteId);
             });
     });
-    $(document).ready(function () {
+    $(document).ready(function () { // KALPLERI BOYAMA ISLEMI
         $('#heart div').click(function (e) {
             var $this = $(this);
             e.preventDefault();
 
-           var num = parseInt($("#likeCount").text()); // sayiyi aldigim yer
-            console.log(num);
+            //var num = parseInt($("#likeCount").text()); // sayiyi aldigim yer
+            //console.log(num);
 
             if (!$this.hasClass('isItLiked')) {
                 $this.addClass('isItLiked');
+               
                 $(this, "#heart-btn").css("color", "red");
                
-                $("#likeCount").text(num + 1); // like islemi
+              /*  $("#likeCount").text(num + 1); // like islemi*/
             }
             else {
 
                 $this.removeClass('isItLiked');
 
                 $(this, "heart-btn").css("color", '');
-                $("#likeCount").text(num - 1); // like i geri cekme islemi
+             /*   $("#likeCount").text(num - 1); // like i geri cekme islemi*/
             }
         });
 
     });
-
+    let isClicked = false;
+    const likeBtn = document.querySelectorAll(".icons"); // SADECE SAYI ARTTIRIYOR
+    likeBtn.forEach(function(item) {
+        item.addEventListener("click",
+            (event) => {
+                let count = item.querySelector(".count");
+                console.log(count);
+                var $this = $(this);
+                if (!isClicked) {
+                    isClicked = true;
+                    $this.addClass('isItLiked');
+                    $(this, "#heart-btn").css("color", "red");
+                    count.textContent++;
+                } else {
+                    isClicked = false;
+                    $this.removeClass('isItLiked');
+                    $(this, "heart-btn").css("color", '');
+                    count.textContent--;
+                }
+            });
+    });
 
     function doComment(btn, e, commentId, spanId) {
         var button = $(btn);
@@ -202,6 +223,40 @@
 
             }
         }
-    }
+        else if (e === 'delete_clicked') {
+            var dialog_res = confirm("Yorum silinsin mi?");
+            if (!dialog_res) {
+                return false;
+            }
+            $.ajax({
+                method: "GET",
+                url: "/Comment/Delete/" + commentId
+            }).done(function(data) {
+                if (data.result) {
+                    $(modalCommentBodyId).load("/Comment/ShowNoteComments/" + noteId);
+                } else {
+                    alert("Yorum silinemedi!");
+                }
+            }).fail(function() {
+                alert("Sunucu ile baglanti kurulamadi!");
+            });
+        }
+        else if (e === "new_clicked") {
+            var txt = $("#new_comment_text").val();
 
+            $.ajax({
+                method: "POST",
+                url: "/Comment/Create",
+                data:{"text":txt,"noteid":noteId}
+            }).done(function (data) {
+                if (data.result) {
+                    $(modalCommentBodyId).load("/Comment/ShowNoteComments/" + noteId);
+                } else {
+                    alert("Yorum eklenemedi!");
+                }
+            }).fail(function () {
+                alert("Sunucu ile baglanti kurulamadi!");
+            });
+        }
+    }
 </script>

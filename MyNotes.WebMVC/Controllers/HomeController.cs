@@ -72,7 +72,27 @@ namespace MyNotes.WebMVC.Controllers
 
         public ActionResult Register()
         {
+            
             return View();
+        }
+        [HttpPost]
+        public ActionResult Register(RegisterViewModel model)
+        {
+
+            if (ModelState.IsValid)
+            {
+                res = mum.RegisterUser(model);
+                if (res.Errors.Count > 0)
+                {
+                    res.Errors.ForEach(x => ModelState.AddModelError("", x.Message));
+                    return View(model);
+                }
+
+
+                return RedirectToAction("Index");
+            }
+
+            return View(model);
         }
     }
 }
