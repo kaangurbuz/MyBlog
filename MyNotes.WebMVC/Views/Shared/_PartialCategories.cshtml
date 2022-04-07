@@ -4,6 +4,7 @@
 @{
     CategoryManager cm = new CategoryManager();
     var list = cm.List();
+    
 }
 
 
@@ -17,13 +18,31 @@
                 <i class="fas fa-angle-double-right"></i> Tumu
             </span>
         </a>
-        @foreach (var cat in list)
-        {
-            <a href="/Home/ByCategoryId/@cat.Id" title="@cat.Description" class="list-group-item list-group-item-action">
-                <span>
-                    <i class="fas fa-angle-double-right"></i>
-                </span> @cat.Title
-            </a>
+
+        @{
+            foreach (var cat in list)
+            {
+                if (@ViewBag.CategoryId != cat.Id)
+                {
+                    <a href="/Home/ByCategoryId/@cat.Id" id="category-item" title="@cat.Description" class="list-group-item list-group-item-action">
+                        <span>
+                            <i class="fas fa-angle-double-right"></i>
+                        </span> @cat.Title <span style="float:right">@cat.Notes.Count</span>
+                    </a>
+                }
+                else
+                {
+                    <a href="/Home/ByCategoryId/@cat.Id" id="category-item" title="@cat.Description" class="list-group-item list-group-item-action bg-danger text-warning">
+                            <span>
+                                <i class="fas fa-angle-double-right"></i>
+                            </span> @cat.Title <span style="float:right">@cat.Notes.Count</span>
+                        </a>
+                }
+
+            }
         }
+
+
+
     </div>
 </div>

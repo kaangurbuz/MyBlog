@@ -1,6 +1,7 @@
 ﻿@using System.Diagnostics.Eventing.Reader
 @using MyNotes.BusinessLayer
 @using MyNotes.EntityLayer
+
 @{
     NoteManager nm = new NoteManager();
     var lst = nm.List();
@@ -45,7 +46,7 @@
             @{
                 int i = 0;
             }
-            @foreach (var note in lst)
+            @foreach (var note in Model)
             {
                 <div class="col mb-5">
                     <div class="card h-100">
@@ -145,14 +146,14 @@
                
                 $(this, "#heart-btn").css("color", "red");
                
-              /*  $("#likeCount").text(num + 1); // like islemi*/
+                /*  $("#likeCount").text(num + 1); // like islemi*/
             }
             else {
 
                 $this.removeClass('isItLiked');
 
                 $(this, "heart-btn").css("color", '');
-             /*   $("#likeCount").text(num - 1); // like i geri cekme islemi*/
+                /*   $("#likeCount").text(num - 1); // like i geri cekme islemi*/
             }
         });
 
@@ -259,4 +260,7 @@
             });
         }
     }
+
+
 </script>
+

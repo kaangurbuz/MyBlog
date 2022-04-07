@@ -63,7 +63,7 @@ namespace MyNotes.BusinessLayer
                     UserName = data.UserName,
                     Password = data.Password,
                     Email = data.Email,
-                    IsActive = true,
+                    IsActive = false,
                     IdAdmin = false,
                     ActivateGuid = Guid.NewGuid()
                     //img eklenecek
@@ -82,10 +82,31 @@ namespace MyNotes.BusinessLayer
                 
             }
             return res;
-        }        
+        }
+
+        public BusinessLayerResult<MyNotesUser> ActivateUser(Guid id)
+        {
+            res.Result = Find(x => x.ActivateGuid == id);
+            if (res.Result != null)
+            {
+                if (res.Result.IsActive)
+                {
+                    res.AddError(ErrorMessageCode.UserAlreadyActive, "Kullanici zaten aktif..!");
+                    return res;
+                }
+                res.Result.IsActive = true;
+                Update(res.Result);
+                Save();
+            }
+            else
+            {
+                res.AddError(ErrorMessageCode.ActivateIdDoesNotExist, "Girdiginiz aktivasyon kodu yanlis..!");
+            }
+            return res;
+        }
     }
 }
 
 //mynotesuser manager içinde register user'ı ekledim
 //homecontroller içinde register ı ekledim
-//
+//register içinde kullanıcı adı ve email kontrolü yapıyorum
