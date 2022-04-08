@@ -157,6 +157,7 @@
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\Login-RegisterStyle.css" />
     <Content Include="Content\styles.css" />
+    <Content Include="Content\ValidationStyle.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -235,6 +236,8 @@
     <Content Include="Views\Home\Ok.cshtml" />
     <Content Include="Views\Home\UserActivateOk.cshtml" />
     <Content Include="Views\Home\UserActivateCancel.cshtml" />
+    <Content Include="Views\Category\Details.cshtml" />
+    <Content Include="Views\Category\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

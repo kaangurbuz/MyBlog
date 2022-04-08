@@ -1,9 +1,9 @@
-﻿@using MyNotes.BusinessLayer
+﻿@using MyNotes.BusinessLayer.Models
 @*@using MyNotes.WebMVC.Models*@
 
 @{
-    CategoryManager cm = new CategoryManager();
-    var list = cm.List();
+    //CategoryManager cm = new CategoryManager();
+    var list = CacheHelper.GetCategoriesFromCache();
     
 }
 

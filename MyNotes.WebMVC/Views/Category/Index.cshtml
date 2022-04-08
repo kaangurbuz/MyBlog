@@ -5,7 +5,7 @@
 
 <h2>Category</h2>
 <p>
-    <a href="#" class="btn btn-success">Yeni Kayit</a>
+    <a href="/Category/Create" class="btn btn-success">Yeni Kayit</a>
 </p>
 
 <table class="table table-bordered table-striped">
@@ -22,10 +22,16 @@
             <tr>
                 <td>@Html.DisplayFor(modelitem=>item.Title)</td>
                 <td>@Html.DisplayFor(modelitem=>item.Description)</td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id })|
-                    @Html.ActionLink("Details", "Details", new { id = item.Id })|
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })|
+                <td class="d-flex justify-content-around">
+                    @Bootstrap.LinkButton("/Category/Edit/"+@item.Id,"warning","btn-sm","Guncelle","","bi bi-pencil","")
+                    @*<a href="/Category/Edit/@item.Id" class="btn btn-warning" title="Guncelle"><i class="bi bi-pencil"></i></a>*@
+                    @*@Html.ActionLink("Edit", "Edit", new {id = item.Id})*@
+                    @Bootstrap.LinkButton("/Category/Details/"+@item.Id,"primary","btn-sm","Detaylar","","bi bi-search","")
+                    @*<a href="/Category/Details/@item.Id" class="btn btn-primary" title="Detaylar"><i class="bi bi-search"></i></a>*@
+                    @*@Html.ActionLink("Details", "Details", new {id = item.Id})*@
+                    @Bootstrap.LinkButton("/Category/Delete/"+@item.Id,"danger","btn-sm","Sil","","bi bi-trash","")
+                    @*<a href="/Category/Delete/@item.Id" class="btn btn-danger" title="Sil"><i class="bi bi-trash"></i></a>*@
+                    @*@Html.ActionLink("Delete", "Delete", new {id = item.Id})*@
                 </td>
             
             </tr>
