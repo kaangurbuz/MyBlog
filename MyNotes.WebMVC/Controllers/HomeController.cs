@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 using MyNotes.BusinessLayer;
 using MyNotes.BusinessLayer.Models;
 using MyNotes.BusinessLayer.ValueObject;
@@ -26,7 +27,7 @@ namespace MyNotes.WebMVC.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             List<Note> notes = nm.QList().Where(x => x.Category.Id == id && x.IsDraft == false).OrderByDescending(x => x.ModifiedOn).ToList();
-            ViewBag.CategoryId = id;
+            ViewBag.CategoryId2 = id;
             
             return View("Index", notes);
         }
@@ -39,6 +40,9 @@ namespace MyNotes.WebMVC.Controllers
         [HttpPost]
         public ActionResult Login(LoginViewModel model)
         {
+            //TempData["uname"] = model.Username;
+            //TempData["pass"] = model.Password;
+            TempData["mod"] = model;
             if (ModelState.IsValid)
             {
                 res = mum.LoginUser(model);
@@ -144,5 +148,125 @@ namespace MyNotes.WebMVC.Controllers
             }
             return View(errors);
         }
+
+        public ActionResult ShowProfile()
+        {
+            if (CurrentSession.User is MyNotesUser currentUser)
+                res = mum.GetUserById(currentUser.Id);
+            if (res.Errors.Count > 0)
+            {
+                ErrorViewModel errorNotifyObj = new ErrorViewModel()
+                {
+                    Title = "Hata Oluştu",
+                    Items = res.Errors
+                };
+                return View("Error", errorNotifyObj);
+            }
+            return View(res.Result);
+        }
+
+        public ActionResult EditProfile()
+        {
+            if (CurrentSession.User is MyNotesUser currentUser) 
+                res = mum.GetUserById(currentUser.Id);
+            if (res.Errors.Count > 0)
+            {
+                ErrorViewModel errorNotifyObj = new ErrorViewModel()
+                {
+                    Title = "Hata Olustu",
+                    Items = res.Errors
+                };
+                return View("Error", errorNotifyObj);
+            }
+            return View(res.Result);
+        }
+        [HttpPost]
+        public ActionResult EditProfile(MyNotesUser model,HttpPostedFileBase profileImage)
+        {
+            ModelState.Remove("ModifiedOn");
+            ModelState.Remove("ModifiedUserName");
+            ModelState.Remove("CreatedOn");
+            if (ModelState.IsValid)
+            {
+                if (profileImage != null && ( profileImage.ContentType == "image/jpeg" || profileImage.ContentType == "image/jpg" || profileImage.ContentType == "image/png"))
+                {
+                    string filename = $"user_{model.Id}.{profileImage.ContentType.Split('/')[1]}";
+                    profileImage.SaveAs(Server.MapPath($"~/images/{filename}"));
+                    model.ProfileImageFileName = filename;
+                }
+                //
+                res = mum.UpdateProfile(model);
+                if (res.Errors.Count > 0)
+                {
+                    ErrorViewModel errorNotifyObj = new ErrorViewModel()
+                    {
+                        Title = "Profil Guncellenemedi",
+                        Items = res.Errors,
+                        RedirectingUrl = "/Home/EditProfile"
+                    };
+                    return View("Error", errorNotifyObj);
+                }
+                CurrentSession.Set("login", res.Result);
+                //return RedirectToAction("ShowProfile");
+                OkViewModel notifyObj = new OkViewModel()
+                {
+                    Title = "Profil Güncellendi",
+                    RedirectingUrl = "/Home/ShowProfile"
+                };
+                notifyObj.Items.Add("Profil bilgileriniz başarıyla güncellendi.");
+                return View("Ok", notifyObj);
+            }
+            return View(model);
+        }
+
+        public ActionResult DeleteProfile()
+        {
+            if (CurrentSession.User is MyNotesUser currentUser)
+            {
+                res = mum.RemoveUserById(currentUser.Id);
+            }
+
+            if (res.Errors.Count > 0)
+            {
+                ErrorViewModel errorNotifyObj = new ErrorViewModel()
+                {
+                    Title = "Profil Silinemedi",
+                    Items = res.Errors
+                };
+                return View("Error", errorNotifyObj);
+            }
+            
+            CurrentSession.Clear();
+
+            OkViewModel notifyObj = new OkViewModel()
+            {
+                Title = "Profil Silindi",
+                RedirectingUrl = "/Home/ShowProfile"
+            };
+            notifyObj.Items.Add("Profil bilgileriniz başarıyla silindi.");
+            return View("Ok", notifyObj);
+
+
+        }
+
+        public ActionResult SendEmail(LoginViewModel model)
+        {
+
+            //model.Username = TempData["uname"].ToString();
+            //model.Password = TempData["pass"].ToString();
+            model = (LoginViewModel) TempData["mod"];
+
+            mum.SendMail(model);
+
+            OkViewModel notifyObj = new OkViewModel()
+            {
+                Title = "Email Gönderildi",
+                RedirectingUrl = "/Home/Login"
+
+            };
+            notifyObj.Items.Add("Lütfen e-posta adresinize gönderilen aktivasyon linkine tıklayarak hesabınızı aktive ediniz.");
+            return View("Ok", notifyObj);
+        }
     }
+
 }

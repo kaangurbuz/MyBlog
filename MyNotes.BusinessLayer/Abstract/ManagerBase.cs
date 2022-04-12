@@ -11,7 +11,7 @@ namespace MyNotes.BusinessLayer.Abstract
 {
     public abstract class ManagerBase<T>:IRepository<T> where T : class
     {
-        private Repository<T> repo = new Repository<T>();
+        private readonly Repository<T> repo = new Repository<T>();
         public List<T> List()
         {
             return repo.List();

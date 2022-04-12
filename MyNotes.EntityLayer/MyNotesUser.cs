@@ -24,7 +24,10 @@ namespace MyNotes.EntityLayer
         public bool IsActive { get; set; }
         [Required]
         public Guid ActivateGuid { get; set; }=Guid.NewGuid();
+
+        public bool IsDeleted { get; set; } = false;
         public bool IdAdmin { get; set; }
+        public string ProfileImageFileName { get; set; }
         public virtual ICollection<Note> Notes { get; set; }=new List<Note>();
         public virtual ICollection<Comment> Comments { get; set; }= new List<Comment>();
         public virtual ICollection<Liked> Likeds { get; set; } = new List<Liked>();

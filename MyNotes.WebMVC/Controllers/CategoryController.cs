@@ -12,7 +12,7 @@ namespace MyNotes.WebMVC.Controllers
 {
     public class CategoryController : Controller
     {
-        CategoryManager cm = new CategoryManager();
+        readonly CategoryManager cm = new CategoryManager();
         // GET: Category
         public ActionResult Index()
         {
@@ -70,6 +70,7 @@ namespace MyNotes.WebMVC.Controllers
                 return HttpNotFound();
             }
             cm.DeleteCat(id);
+            CacheHelper.RemoveCategoriesCache();
             return RedirectToAction("Index");
         }
     }
