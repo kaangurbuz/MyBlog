@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -16,6 +17,6 @@ namespace MyNotes.EntityLayer
         [StringLength(150)]
         public string Description { get; set; }
 
-        public virtual ICollection<Note> Notes { get; set; }
+        public virtual List<Note> Notes { get; set; } = new List<Note>();
     }
 }
